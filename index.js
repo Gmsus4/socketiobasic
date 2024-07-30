@@ -11,8 +11,15 @@ const io = require('socket.io')(server);
 //Desplegar el directorio publico
 app.use( express.static(__dirname + '/public'));
 
-io.on('connection', () => {
-    console.log('Cliente conectado'); //Un dispositivo que se conecto al socket server
+io.on('connection', ( socket ) => {
+    socket.emit('mensaje-bienvenida', { //Emitir un evento, los eventos son basicamente instrucciones que se disparan
+        msg: 'Bienvenido al server',
+        fecha: new Date()
+    }) 
+
+    socket.on('mensaje-cliente', (data) => {
+        console.log(data)
+    })
 });
 
 server.listen(8080, () => {
