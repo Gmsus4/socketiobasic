@@ -45,6 +45,7 @@
 
         formulario.addEventListener('submit', (ev) => {
             ev.preventDefault();
+            txtMensaje.innerHTML = '';
             const nuevoMensaje = txtMensaje.value;
             socket.emit('mensaje-to-server', { texto: nuevoMensaje })
         })
