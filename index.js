@@ -1,31 +1,20 @@
-// Servidor de express
-const express = require('express');
-const app = express();
+const Server = require("./models/server");
 
-//Servidor de sockets
-const server = require('http').createServer(app);
+const server = new Server();
+server.execute();
 
-//Configuracion del socket server
-const io = require('socket.io')(server);
+// io.on('connection', ( socket ) => {
+//     //Emitir un evento, los eventos son basicamente instrucciones que se disparan
+//     // socket.emit('mensaje-bienvenida', { 
+//     //     msg: 'Bienvenido al server',
+//     //     fecha: new Date()
+//     // }) 
 
-//Desplegar el directorio publico
-app.use( express.static(__dirname + '/public'));
+//     //Escuchar evento
+//     socket.on('mensaje-to-server', (data) => {
+//         console.log(data)
 
-io.on('connection', ( socket ) => {
-    //Emitir un evento, los eventos son basicamente instrucciones que se disparan
-    // socket.emit('mensaje-bienvenida', { 
-    //     msg: 'Bienvenido al server',
-    //     fecha: new Date()
-    // }) 
+//         io.emit('mensaje-from-server', data); //Mensaje global
+//     })
+// });
 
-    //Escuchar evento
-    socket.on('mensaje-to-server', (data) => {
-        console.log(data)
-
-        io.emit('mensaje-from-server', data); //Mensaje global
-    })
-});
-
-server.listen(8080, () => {
-    console.log('Server corriendo en puerto :8080')
-});
